@@ -44,8 +44,7 @@ int main(int argc, char *argv[]){
 
 }
 
-void
-count(register char *array_ptr, unsigned int len, struct timed_count *timed_count_ptr){
+void count(register char *array_ptr, unsigned int len, struct timed_count *timed_count_ptr){
 	unsigned int element_num = 0;
 	register char shift_num;
 	register unsigned char mask;
@@ -76,5 +75,26 @@ count(register char *array_ptr, unsigned int len, struct timed_count *timed_coun
 	getrusage(RUSAGE_SELF, &rusage);
 	total_time_post = rusage.ru_stime.tv_usec + rusage.ru_utime.tv_usec;
 	(*timed_count_ptr).run_time = total_time_post - total_time_pre;
+
+}
+
+void slow_count(char *array_ptr, unsigned int lne, struct timed_count *timed_count_ptr){
+	unsigned int element_num = 0;
+	char shift_num;	
+	while(element_num !=len){
+
+		for(shift_num = 0; shift_num < 8; ++shift_num){
+
+			mask = (0x80 >> shift_num);
+			if((*array_ptr & mask) !=0){
+
+				(*timed_count_ptr).num_bits_on +=1;
+			}
+
+		}
+
+
+
+	}
 
 }
